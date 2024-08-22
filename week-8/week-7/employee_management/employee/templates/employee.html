@@ -1,0 +1,57 @@
+{% extends 'layout.html' %}
+
+{% load humanize %}
+
+{% block title %}Employee{% endblock %}
+
+{% block content %}
+    <main>
+        <div class="head">
+            <h1>Employee</h1>
+            <div>
+                <!-- จำนวนพนักงานทั้งหมด -->
+                <h1>Total {{ total_employees }} People</h1>
+            </div>
+        </div>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Full Name</th>
+                <th>Genger</th>
+                <th>Birth Date</th>
+                <th>Hire Date</th>
+                <th>Salary</th>
+                <th>Department</th>
+                <th>Position</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for emp in employees|dictsort:"hire_date" %}
+                <tr {% if forloop.first or forloop.last %} style="color: red;" {% endif %}>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ emp.first_name }} {{ emp.last_name }}</td>
+                    <td>
+                        {% if emp.gender == 'M' %}
+                            Male
+                        {% elif emp.gender == 'F' %}
+                            Female
+                        {% else %}
+                            Other
+                        {% endif %}
+                    </td>
+                    <td>{{ emp.birth_date|date:"d/m/Y" }}</td>
+                    <td>{{ emp.hire_date|date:"d/m/Y" }}</td>
+                    <td>{{ emp.salary|intcomma }}</td>
+                    <td>{{ emp.position.department.name }}</td>
+                    <td>{{ emp.position.name }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="9">No employees found.</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </main>
+{% endblock %}
