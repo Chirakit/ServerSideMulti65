@@ -1,0 +1,1 @@
+{"argv": ["python", "-m", "ipykernel_launcher", "-f", "{connection_file}", "--ext", "django_extensions.management.notebook_extension"], "env": {"PYTHONPATH": "C:\\Users\\Advice03\\Documents\\Githup\\ServerSideMulti65\\practice_mid1\\mid"}, "display_name": "Django Shell-Plus", "language": "python", "interrupt_mode": "signal", "metadata": {"debugger": true}}
