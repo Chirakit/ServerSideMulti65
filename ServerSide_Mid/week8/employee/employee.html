@@ -1,0 +1,77 @@
+{% extends 'layout.html' %}
+{% load gender %}
+
+{% block title %}Employee{% endblock %}
+
+{% block head %}
+    <div class="head" style="display:flex; flex-direction: row;place-content: space-between; margin:10px 10px">
+        <h1>Employee</h1>
+        <div>
+            <!-- จำนวนพนักงานทั้งหมด -->
+            <h1>Total {{ employees|length }} People{{ employee|length|pluralize }}</h1>
+        </div>
+    </div>
+{% endblock %}
+            <!-- 
+                ** Hit if และ for ให้ถูกต้อง
+            --> 
+
+{% block content %}
+{% if employees %}
+<div style="padding:0px 10px;">
+    <table>
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Employee ID</th>
+                <th>Full Name</th>
+                <th>Gender</th>
+                <th>Birth Date</th>
+                <th>Hire Date</th>
+                <th>Salary</th>
+                <th>Department</th>
+                <th>Position</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for i in employees|dictsort:'hire_date' %}
+            {% if forloop.first or forloop.last %}
+                <tr style="color:red">
+            {% else %}
+                <tr>
+            {% endif %}
+                <!-- ลำดับการแสดงข้อมูล -->
+                <td>{{ forloop.counter }}</td>
+                <!-- employee id -->
+                <td>{{ i.id }}</td> 
+                <!-- ชื่อ นามสกุล -->
+                <td>{{ i.get_full_name }}</td>
+                <!-- เพศ -->
+                {% comment %} {% if i.gender == "M" %}
+                    <td>Male</td>
+                {% elif i.gender == "F" %}
+                    <td>Female</td>
+                {% else %}
+                    <td>Other</td>
+                {% endif %} {% endcomment %}
+                <td>{{ i.gender|gender }}</td>
+                <!-- วันเกิด (dd/mm/yyyy)-->
+                <td>{{ i.birth_date|date:"d/m/Y" }}</td>
+                <!-- วันเริ่มงาน (dd/mm/yyyy) -->
+                <td>{{ i.hire_date|date:"d/m/Y" }}</td>
+                <!-- เงินเดือน ex. 10,000 -->
+                <td>{{ i.salary|floatformat:"g" }}</td>
+                <!-- แผนก -->
+                <td>{{ i.position.department.name }}</td>
+                <!-- ตำแหน่งงาน -->
+                <td>{{ i.position.name }}</td>
+            </tr>
+            {% empty %}
+                <h3>No employees in database ._.</h3>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+{% endblock %}

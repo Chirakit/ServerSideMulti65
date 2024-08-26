@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+
+{% block title %}Position{% endblock %}
+
+{% block head %}
+<div class="head" style="margin:10px 3px">
+    <h1>Position</h1>
+</div>
+{% endblock %}
+
+{% block content %}
+{% if positions %}
+<!-- กำหนด if และ for ให้ถูกต้อง -->
+<div class="itemGroup">
+    {% for i in positions %}
+    <div class="item">
+        <!-- position id และ ชื่อตำแหน่ง -->
+        <div>{{ i.id }}. {{ i.name }}</div>
+
+        <!-- จำนวนพนักงานทั้งหมด -->
+        <div class="action">{{ i.employee_set.count }} People{{ i.employee_set|length|pluralize }}</div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}
