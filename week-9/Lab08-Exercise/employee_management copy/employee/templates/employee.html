@@ -20,7 +20,7 @@
             <tr>
                 <th>ID</th>
                 <th>Full Name</th>
-                <th>Genger</th>
+                <th>Gender</th>
                 <th>Birth Date</th>
                 <th>Hire Date</th>
                 <th>Salary</th>
@@ -29,8 +29,8 @@
             </tr>
             </thead>
             <tbody>
-            {% for employee in employees|dictsort:"hire_date" %}
-                <tr {% if forloop.first or forloop.last %} style="color: red;" {% endif %}>
+            {% for employee in employees %}
+                <tr>
                     <td>{{ forloop.counter }}</td>
                     <td>{{ employee.first_name }} {{ employee.last_name }}</td>
                     <td>

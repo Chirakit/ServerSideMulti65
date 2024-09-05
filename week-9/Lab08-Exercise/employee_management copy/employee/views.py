@@ -12,7 +12,7 @@ from .models import *
 
 class EmployeeView(View):
     def get(self, request):
-        employees = Employee.objects.all()
+        employees = Employee.objects.all().order_by("-hire_date")
 
         context = {
             "employees": employees,
@@ -101,7 +101,7 @@ class NewEmployee(View):
             hire_date = form.cleaned_data['hire_date']
             salary = form.cleaned_data['salary']
             position = form.cleaned_data['position']
-
+            print(form.cleaned_data)
             Employee.objects.create(
                 first_name=first_name,
                 last_name=last_name,

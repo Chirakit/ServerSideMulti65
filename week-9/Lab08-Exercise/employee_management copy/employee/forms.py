@@ -4,11 +4,9 @@ from datetime import datetime
 
 class EmployeeForm(forms.Form):
     gender_choice = (
-        (1, "---------"),
-        (2, "M"),
-        (3, "F"),
-        (4, "LGBT"),
-        (5, "Attack Helicopter")
+        ("M", "M"),
+        ("F", "F"),
+        ("LGBT", "LGBT"),
     )
 
     first_name = forms.CharField(label="First name:", max_length=100)
