@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block title %} Create Employee {% endblock %}
+
+{% block head %}
+    <h1>Form Employee</h1>
+
+{% endblock %}
+
+{% block content %}
+    <div class="emp-form-box">
+        <form method="post">
+            {% csrf_token %}
+            <div style="margin-left: 20px; margin-top: 20px">
+                {{ form }}
+            </div>
+            <br>
+            <button type="submit">Save</button>
+        </form>
+    </div>
+
+{% endblock %}
