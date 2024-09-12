@@ -8,6 +8,9 @@
             <h1>Project</h1>
         </div>
 
+        <a href="{% url 'new_project' %}" class="btn btn-primary">
+            <button class="newpro">New Project</button>
+        </a>
         <div class="itemGroup">
             {% for project in projects %}
                 <div class="item">

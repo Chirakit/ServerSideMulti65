@@ -6,6 +6,7 @@ urlpatterns = [
     # ex: /polls/
     path("", views.EmployeeView.as_view(), name="employee"),
     path("new_employee/", views.NewEmployee.as_view(), name="new_employee"),
+    path('new_project/', views.NewProject.as_view(), name='new_project'),
     path("position/", views.PositionView.as_view(), name="position"),
     path("project/", views.ProjectView.as_view(), name="project"),
     path('project/<int:project_id>/', views.ProjectDetailView.as_view(), name='project_details'),
