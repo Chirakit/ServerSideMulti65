@@ -36,14 +36,16 @@ class ProjectForm(ModelForm):
         model = Project
         fields = [
             "name",
-            "manager",
             "due_date",
             "start_date",
-            "description"
+            "description",
+            "manager",
+            "staff"
         ]
         widgets = {
             'start_date': forms.DateInput(attrs={'type': 'date'}),
             'due_date': forms.DateInput(attrs={'type': 'date'}),
+            'staff': forms.SelectMultiple(),
         }
 
     def clean(self):

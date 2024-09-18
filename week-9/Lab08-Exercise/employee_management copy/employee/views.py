@@ -2,7 +2,7 @@ import json
 
 from django.db.models import Count, Value
 from django.db.models.functions import Concat
-from django.http import Http404, JsonResponse, HttpResponseRedirect
+from django.http import Http404, JsonResponse, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 from django.views import View
 
@@ -113,3 +113,21 @@ class NewProject(View):
             return redirect('project')
 
         return render(request, 'project_form.html', {'form': form})
+
+class UpdateProject(View):
+    def get(self, request, project_id):
+        project = Project.objects.get(pk=project_id)
+        form = ProjectForm(instance=project)
+        return render(request, 'project_detail.html', {'form': form, 'project': project})
+
+    def post(self, request, project_id):
+        project = Project.objects.get(pk=project_id)
+        form = ProjectForm(request.POST, instance=project)  # Pass 'instance=project' here!
+
+        if form.is_valid():
+            project = form.save()
+            # staff_ids = form.cleaned_data.get('staff', [])
+            # project.staff.set(staff_ids)
+            return redirect('project_details', project_id=project.id)  # make sure your url name is correct
+
+        return render(request, 'project_detail.html', {'form': form, 'project': project})
