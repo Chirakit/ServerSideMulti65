@@ -1,12 +1,11 @@
+# employee/models.py
 from django.db import models
 
-
-# Create your models here.
 class Employee(models.Model):
-    class Gender(models.Choices):
-        M = "M"
-        F = "F"
-        LGBT = "LGBT"
+    class Gender(models.TextChoices):
+        M = "M", "Male"
+        F = "F", "Female"
+        LGBT = "LGBT", "LGBT"
         
     first_name = models.CharField(max_length=155)
     last_name = models.CharField(max_length=155)
@@ -14,19 +13,14 @@ class Employee(models.Model):
     birth_date = models.DateField()
     hire_date = models.DateField()
     salary = models.DecimalField(default=0, max_digits=10, decimal_places=2)
-    position = models.ForeignKey(
-        "employee.Position", 
-        on_delete=models.SET_NULL, 
-        null=True, 
-        blank=True
-    )
-
+    position_id = models.IntegerField(null=True) # Change from ForeignKey to IntegerField
+    
     def get_full_name(self):
         return f"{self.first_name} {self.last_name}"
-    def __str__(self):
-        return f"{self.first_name} {self.last_name}"
-
-
+    
+    def __str__(self) -> str:
+        return self.get_full_name()
+    
 class EmployeeAddress(models.Model):
     employee = models.OneToOneField("employee.Employee", on_delete=models.PROTECT)
     location = models.TextField(null=True, blank=True)
@@ -35,38 +29,20 @@ class EmployeeAddress(models.Model):
     postal_code = models.CharField(max_length=15)
 
 
-class Department(models.Model):
-    name = models.CharField(max_length=155)
-    manager = models.OneToOneField(
-        "employee.Employee",
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True
-    )
-
-
-class Position(models.Model):
-    name = models.CharField(max_length=155)
-    description = models.TextField(null=True, blank=True)
-    department = models.ForeignKey(
-        "employee.Department",
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True
-    )
-    def __str__(self):
-        return self.name
-
 class Project(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
     description = models.TextField(null=True, blank=True)
     manager = models.OneToOneField(
-        "employee.Employee",
-        on_delete=models.SET_NULL,
-        null=True,
+        "employee.Employee", 
+        on_delete=models.SET_NULL, 
+        null=True, 
         blank=True,
         related_name="project_mamager"
     )
     due_date = models.DateField()
     start_date = models.DateField()
     staff = models.ManyToManyField("employee.Employee")
+    
+    def __str__(self):
+        return str(self.name)
+    

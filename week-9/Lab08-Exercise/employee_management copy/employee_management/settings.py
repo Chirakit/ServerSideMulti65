@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'employee',
+    'company',
 ]
 
 MIDDLEWARE = [
@@ -75,10 +76,18 @@ WSGI_APPLICATION = 'employee_management.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "employee_db",
-        "USER": "postgres",
+        "NAME": "employee_db", # อย่าลืมสร้าง db - employee_db ใน Postgres นะครับ
+        "USER":  "postgres",
         "PASSWORD": "password",
-        "HOST": "localhost",
+        "HOST": "127.0.0.1",
+        "PORT": "5432",
+    },
+    "db2": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "company_db", # อย่าลืมสร้าง db - company_db ใน Postgres นะครับ
+        "USER":  "postgres",
+        "PASSWORD": "password",
+        "HOST": "127.0.0.1",
         "PORT": "5432",
     }
 }
@@ -125,3 +134,4 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DATABASE_ROUTERS = ["company.routers.CompanyRouter"]

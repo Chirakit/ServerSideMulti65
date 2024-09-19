@@ -26,6 +26,8 @@
                 <th>Salary</th>
                 <th>Department</th>
                 <th>Position</th>
+                <th>Location</th>
+                <th>Province</th>
             </tr>
             </thead>
             <tbody>
@@ -47,6 +49,8 @@
                     <td>{{ employee.salary|intcomma }}</td>
                     <td>{{ employee.position.department.name }}</td>
                     <td>{{ employee.position.name }}</td>
+                    <td>{{ employee.employeeaddress.location }}</td>
+                    <td>{{ employee.employeeaddress.province }}</td>
                 </tr>
             {% empty %}
                 <tr>

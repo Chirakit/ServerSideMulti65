@@ -2,9 +2,11 @@ import json
 
 from django.db.models import Count, Value
 from django.db.models.functions import Concat
+from django.db import transaction
 from django.http import Http404, JsonResponse, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 from django.views import View
+from django.core.exceptions import ObjectDoesNotExist
 
 from .forms import EmployeeForm, ProjectForm
 from .models import *
@@ -23,11 +25,11 @@ class EmployeeView(View):
 
 class PositionView(View):
     def get(self, request):
-        positions = Position.objects.annotate(num_employees=Count('employee')).order_by('id')
+        # positions = Position.objects.annotate(num_employees=Count('employee')).order_by('id')
 
-        context = {
-            "positions": positions,
-        }
+        # context = {
+        #     "positions": positions,
+        # }
         return render(request, "position.html", context)
 
 
@@ -91,11 +93,22 @@ class NewEmployee(View):
     def get(self, request):
         form = EmployeeForm()
         return render(request, 'employee_form.html', {'form': form})
-
+    
     def post(self, request):
         form = EmployeeForm(request.POST)
         if form.is_valid():
-            form.save()
+            try:
+                with transaction.atomic():
+                    employee = form.save()
+                    location = form.cleaned_data['location']
+                    district = form.cleaned_data['district']
+                    province = form.cleaned_data['province']
+                    postal_code = form.cleaned_data['postal_code']
+                    emp_address = EmployeeAddress(employee=employee,location=location, district=district, province=province, postal_code=postal_code)
+                    emp_address.save()
+            except ObjectDoesNotExist:
+                print("Print Fail")    
+    
             return redirect('employee')
 
         return render(request, 'employee_form.html', {'form': form})
@@ -122,7 +135,7 @@ class UpdateProject(View):
 
     def post(self, request, project_id):
         project = Project.objects.get(pk=project_id)
-        form = ProjectForm(request.POST, instance=project)
+        form = ProjectForm(request.POST, instance=project)#เราเอาข้อมูลใหม่ไปชี้ใส่ไหน = ใส่ Instance
 
         if form.is_valid():
             project = form.save()
