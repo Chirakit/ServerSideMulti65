@@ -6,7 +6,7 @@ class Employee(models.Model):
         M = "M", "Male"
         F = "F", "Female"
         LGBT = "LGBT", "LGBT"
-        
+
     first_name = models.CharField(max_length=155)
     last_name = models.CharField(max_length=155)
     gender = models.CharField(max_length=10, choices=Gender.choices)
@@ -27,7 +27,6 @@ class EmployeeAddress(models.Model):
     district = models.CharField(max_length=100)
     province = models.CharField(max_length=100)
     postal_code = models.CharField(max_length=15)
-
 
 class Project(models.Model):
     name = models.CharField(max_length=255, unique=True)

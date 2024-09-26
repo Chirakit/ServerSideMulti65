@@ -1,5 +1,5 @@
-# company/routers.py
 class CompanyRouter:
+    route_app_labels = {"employee", "company"}
     def db_for_read(self, model, **hints):
         if model._meta.app_label == "company":
             return "db2"

@@ -8,6 +8,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.core.exceptions import ObjectDoesNotExist
 
+from company.models import Position
 from .forms import EmployeeForm, ProjectForm
 from .models import *
 
@@ -15,13 +16,15 @@ from .models import *
 class EmployeeView(View):
     def get(self, request):
         employees = Employee.objects.all().order_by("-hire_date")
+        
+        for employee in employees:
+            employee.position = Position.objects.get(pk=employee.position_id)
 
         context = {
             "employees": employees,
             "total_employees": len(employees)
         }
         return render(request, "employee.html", context)
-
 
 class PositionView(View):
     def get(self, request):

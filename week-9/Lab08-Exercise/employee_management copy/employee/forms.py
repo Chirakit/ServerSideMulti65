@@ -2,9 +2,11 @@ from datetime import date
 from django import forms
 from django.forms import ModelForm
 from django.core.exceptions import ValidationError
+from company.models import Position
 from .models import Employee, EmployeeAddress, Project
 
 class EmployeeForm(ModelForm):
+    position_id = forms.ModelChoiceField(label="Position:", queryset=Position.objects.using("db2").all(), required=True)
     location = forms.CharField(widget=forms.TextInput(attrs={"cols": 30, "rows": 3}))
     district = forms.CharField(max_length=100)
     province = forms.CharField(max_length=100)
@@ -19,7 +21,7 @@ class EmployeeForm(ModelForm):
             "birth_date", 
             "hire_date", 
             "salary", 
-            # "position",
+            "position_id",
             "location",
             "district",
             "province",
@@ -32,13 +34,17 @@ class EmployeeForm(ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
-        hire_date = cleaned_data.get("hire_date")
-        if date.today() < hire_date:
-            self.add_error(
-                'hire_date',
-                'Hire date should not be future'
-            )
+        position = cleaned_data.get("position_id")
+        cleaned_data["position_id"] = position.id
         return cleaned_data
+
+        #hire_date = cleaned_data.get("hire_date")
+        # if date.today() < hire_date:
+        #     self.add_error(
+        #         'hire_date',
+        #         'Hire date should not be future'
+        #     )
+        # return cleaned_data
 
 class ProjectForm(ModelForm):
     class Meta:

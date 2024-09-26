@@ -78,7 +78,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "employee_db", # อย่าลืมสร้าง db - employee_db ใน Postgres นะครับ
         "USER":  "postgres",
-        "PASSWORD": "password",
+        "PASSWORD": "4286",
         "HOST": "127.0.0.1",
         "PORT": "5432",
     },
@@ -86,7 +86,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "company_db", # อย่าลืมสร้าง db - company_db ใน Postgres นะครับ
         "USER":  "postgres",
-        "PASSWORD": "password",
+        "PASSWORD": "4286",
         "HOST": "127.0.0.1",
         "PORT": "5432",
     }
