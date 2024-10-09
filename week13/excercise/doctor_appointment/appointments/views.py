@@ -31,3 +31,7 @@ class AppointmentList(APIView):
             return Response(serializer.data)
         
         return Response(serializer.errors, status=400)
+
+class AppointmentDetailList(APIView):
+    def get(self, request, appointment_id):
+        appointment_detail = Appointment.objects.get(pk=appointment_id)
