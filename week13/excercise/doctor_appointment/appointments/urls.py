@@ -5,5 +5,5 @@ urlpatterns = [
     path('doctors/', views.DoctorList.as_view(), name='doctor-list'),
     path('patients/', views.PatientList.as_view(), name='patient-list'),
     path('appointments/', views.AppointmentList.as_view(), name='appointment-list'),
-    path('appointments/<int:appointment_id>', views.AppointmentDetailList.as_view(), name='appointment-detail'),
+    path('appointments/<int:appointment_id>/', views.AppointmentDetailList.as_view(), name='appointment-detail'),
 ]

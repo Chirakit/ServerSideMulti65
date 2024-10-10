@@ -50,7 +50,8 @@ class AppointmentAddSerializer(serializers.ModelSerializer):
             "patient",
             "date",
             "at_time",
-            "details"
+            "details",
+            "created_by",
         ]
 
     def validate(self, data):

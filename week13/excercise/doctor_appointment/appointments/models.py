@@ -26,7 +26,7 @@ class Appointment(models.Model):
     date = models.DateField()
     at_time = models.TimeField()
     details = models.TextField(null=True, blank=True)
-    created_by = models.ForeignKey('auth.User', null=True, on_delete=models.PROTECTED)
+    created_by = models.ForeignKey('auth.User', null=True, on_delete=models.PROTECT)
 
     def __str__(self):
         return f'Appointment with Dr. {self.doctor.name} for {self.patient.name} on {self.date.strftime("YYYY-MM-DD HH:mm")}'
