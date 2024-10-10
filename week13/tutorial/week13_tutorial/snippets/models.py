@@ -19,6 +19,8 @@ class Snippet(models.Model):
     language = models.CharField(choices=LANGUAGE_CHOICES, default='python', max_length=100)
     style = models.CharField(choices=STYLE_CHOICES, default='friendly', max_length=100)
     category = models.ForeignKey(SnippetCategory, null=True, on_delete=models.CASCADE)
+    owner = models.ForeignKey('auth.User', related_name='snippets', null=True, on_delete=models.CASCADE)
+    highlighted = models.TextField(null=True)
 
     class Meta:
         ordering = ['created']
